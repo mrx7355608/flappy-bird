@@ -1,19 +1,21 @@
+#include "../include/Globals.h"
 #include <SFML/Graphics.hpp>
 
+const int screenWidth = 280;
+const int screenHeight = 500;
+
 sf::Sprite background;
-sf::Texture backgroundTexture;
-
 sf::Sprite base;
-sf::Texture baseTexture;
-
 sf::Image icon;
+sf::Texture backgroundTexture;
+sf::Texture baseTexture;
 
 void loadBaseImage() {
     if (!baseTexture.loadFromFile("assets/sprites/base.png")) {
         throw "CANNOT LOAD BASE";
     }
     sf::Sprite baseSprite(baseTexture);
-    baseSprite.setOrigin(0, -400);
+    baseSprite.setPosition(0, 400);
     base = baseSprite;
 }
 
@@ -31,4 +33,13 @@ void loadIcon() {
         throw "CANNOT LOAD ICON";
     }
     icon = iconImage;
+}
+
+void continuousBaseMovement() {
+    const float basePosX = base.getPosition().x;
+    const int rightSideOfBase = base.getLocalBounds().width + basePosX;
+
+    if (rightSideOfBase < screenWidth + 10) {
+        base.setPosition(0, 400);
+    }
 }
