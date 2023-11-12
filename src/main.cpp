@@ -1,4 +1,5 @@
 #include "../include/Display.h"
+#include "../include/Globals.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -8,6 +9,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <string>
+
+const int screenWidth = 280;
+const int screenHeight = 500;
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight),

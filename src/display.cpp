@@ -1,9 +1,6 @@
 #include "../include/Globals.h"
 #include <SFML/Graphics.hpp>
 
-const int screenWidth = 280;
-const int screenHeight = 500;
-
 sf::Sprite background;
 sf::Sprite base;
 sf::Image icon;

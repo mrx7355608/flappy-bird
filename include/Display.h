@@ -1,4 +1,3 @@
-#include "../include/Globals.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
