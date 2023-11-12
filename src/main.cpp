@@ -1,5 +1,6 @@
 #include "../include/Display.h"
 #include "../include/Globals.h"
+#include "../include/Movement.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Rect.hpp>
