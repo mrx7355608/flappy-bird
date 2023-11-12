@@ -1,3 +1,6 @@
+#ifndef GLOBALS_H
+#define GLOBALS_H
+
 #include <SFML/Graphics.hpp>
 
 extern const int screenWidth;
@@ -8,3 +11,5 @@ extern sf::Sprite base;
 extern sf::Image icon;
 extern sf::Texture backgroundTexture;
 extern sf::Texture baseTexture;
+
+#endif
