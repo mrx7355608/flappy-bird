@@ -1,4 +1,6 @@
 #include "../include/Globals.h"
+#include "../include/Movement.h"
+#include <SFML/Graphics/Sprite.hpp>
 #include <iostream>
 #include <vector>
 
@@ -9,15 +11,6 @@ int pipeXpos = screenWidth + 30;
 const int pipePosCombos[6][2] = {{-50, 650},  {-100, 600}, {-150, 550},
                                  {-200, 500}, {-250, 450}, {-150, 400}};
 
-void continuousBaseMovement() {
-    const float basePosX = base.getPosition().x;
-    const int rightSideOfBase = base.getLocalBounds().width + basePosX;
-
-    if (rightSideOfBase < screenWidth + 10) {
-        base.setPosition(0, 400);
-    }
-}
-
 int generateRandomNumber() {
     srand(time(NULL));
     int randomNumber = rand() % 5;
@@ -26,9 +19,17 @@ int generateRandomNumber() {
 
 void spawnPipes() {
     int randomNumber = generateRandomNumber();
-    std::cout << randomNumber << '\n';
     bottomPipe.setPosition(pipeXpos, pipePosCombos[randomNumber][1]);
     topPipe.setPosition(pipeXpos, pipePosCombos[randomNumber][0]);
     bottomPipes.push_back(bottomPipe);
     topPipes.push_back(topPipe);
+}
+
+void Movement::continuousBaseMovement(sf::Sprite *base) {
+    const float basePosX = base->getPosition().x;
+    const int rightSideOfBase = base->getLocalBounds().width + basePosX;
+
+    if (rightSideOfBase < screenWidth + 10) {
+        base->setPosition(0, 400);
+    }
 }

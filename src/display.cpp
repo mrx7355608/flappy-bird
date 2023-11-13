@@ -31,20 +31,7 @@ void loadBackgroundImage() {
     background = bg;
 }
 
-void loadIcon() {
-    sf::Image iconImage;
-    if (!iconImage.loadFromFile("assets/favicon.png")) {
-        throw "CANNOT LOAD ICON";
-    }
-    icon = iconImage;
-}
-
 void loadBottomPipe() {
-    if (!pipeTexture.loadFromFile("assets/sprites/pipe-green.png")) {
-        throw "CANNOT_LOAD_PIPE_SPRITES";
-    }
-    sf::Sprite bPipe(pipeTexture);
-    bottomPipe = bPipe;
     sf::FloatRect localBounds = bottomPipe.getLocalBounds();
     bottomPipe.setOrigin(localBounds.width / 2, localBounds.height);
 }
