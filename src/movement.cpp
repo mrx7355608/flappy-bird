@@ -1,4 +1,5 @@
 #include "../include/Globals.h"
+#include <vector>
 
 void continuousBaseMovement() {
     const float basePosX = base.getPosition().x;

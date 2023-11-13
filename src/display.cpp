@@ -1,11 +1,17 @@
 #include "../include/Globals.h"
 #include <SFML/Graphics.hpp>
 
-sf::Sprite background;
-sf::Sprite base;
-sf::Image icon;
 sf::Texture backgroundTexture;
+sf::Sprite background;
+
+sf::Sprite base;
 sf::Texture baseTexture;
+
+sf::Texture pipeTexture;
+sf::Sprite bottomPipe;
+sf::Sprite topPipe;
+
+sf::Image icon;
 
 void loadBaseImage() {
     if (!baseTexture.loadFromFile("assets/sprites/base.png")) {
@@ -30,4 +36,20 @@ void loadIcon() {
         throw "CANNOT LOAD ICON";
     }
     icon = iconImage;
+}
+
+void loadBottomPipe() {
+    if (!pipeTexture.loadFromFile("assets/sprites/pipe-green.png")) {
+        throw "CANNOT_LOAD_PIPE_SPRITES";
+    }
+    sf::Sprite bPipe(pipeTexture);
+    bottomPipe = bPipe;
+}
+
+void loadTopPipe() {
+    if (!pipeTexture.loadFromFile("assets/sprites/pipe-green.png")) {
+        throw "CANNOT_LOAD_PIPE_SPRITES";
+    }
+    sf::Sprite tPipe(pipeTexture);
+    topPipe = tPipe;
 }

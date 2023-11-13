@@ -32,19 +32,22 @@ int main() {
     // =================================
     sf::Clock clock;
     float lastPipeGenerationTime = clock.getElapsedTime().asSeconds();
-    std::vector<sf::Sprite> pipes = {};
+    std::vector<sf::Sprite> bottomPipes = {};
+    std::vector<sf::Sprite> topPipes = {};
 
-    sf::Texture pipeTexture;
-    if (!pipeTexture.loadFromFile("assets/sprites/pipe-green.png")) {
-        throw "CANNOT_LOAD_PIPE_SPRITES";
-    }
-    sf::Sprite pipe(pipeTexture);
+    loadBottomPipe();
+    loadTopPipe();
 
     // Get local bounds of pipe
-    sf::FloatRect localBounds = pipe.getLocalBounds();
-    pipe.setOrigin(localBounds.width / 2, localBounds.height);
+    sf::FloatRect localBounds = bottomPipe.getLocalBounds();
+    // Set origin for rotation and positions
+    int pipeXpos = screenWidth + 30;
+    bottomPipe.setOrigin(localBounds.width / 2, localBounds.height);
+    bottomPipe.setPosition(pipeXpos, 650);
+    topPipe.setOrigin(localBounds.width / 2, localBounds.height);
+    topPipe.setPosition(pipeXpos, -250);
+    topPipe.rotate(180);
 
-    pipe.setPosition(screenWidth + 30, 400);
     // =================================
     // =================================
 
@@ -60,16 +63,25 @@ int main() {
 
         // Pipe generation after every 3 seconds
         float currentTime = clock.getElapsedTime().asSeconds();
-        if (currentTime - lastPipeGenerationTime > 2) {
-            pipes.push_back(pipe);
+        if (currentTime - lastPipeGenerationTime > 1.5) {
+            bottomPipes.push_back(bottomPipe);
+            topPipes.push_back(topPipe);
             lastPipeGenerationTime = currentTime;
         }
 
         window.clear();
         window.draw(background);
-        for (int i = 0; i < pipes.size(); i++) {
-            window.draw(pipes[i]);
-            pipes[i].move(-2, 0);
+
+        // Render bottom pipes
+        for (int i = 0; i < bottomPipes.size(); i++) {
+            window.draw(bottomPipes[i]);
+            bottomPipes[i].move(-2, 0);
+        }
+
+        // Render top pipes
+        for (int i = 0; i < topPipes.size(); i++) {
+            window.draw(topPipes[i]);
+            topPipes[i].move(-2, 0);
         }
         window.draw(base);
         base.move(-2, 0);

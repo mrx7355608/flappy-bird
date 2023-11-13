@@ -6,10 +6,16 @@
 extern const int screenWidth;
 extern const int screenHeight;
 
-extern sf::Sprite background;
-extern sf::Sprite base;
-extern sf::Image icon;
 extern sf::Texture backgroundTexture;
+extern sf::Sprite background;
+
 extern sf::Texture baseTexture;
+extern sf::Sprite base;
+
+extern sf::Texture pipeTexture;
+extern sf::Sprite bottomPipe;
+extern sf::Sprite topPipe;
+
+extern sf::Image icon;
 
 #endif

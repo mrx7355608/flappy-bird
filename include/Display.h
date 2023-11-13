@@ -7,5 +7,7 @@
 void loadBackgroundImage();
 void loadBaseImage();
 void loadIcon();
+void loadBottomPipe();
+void loadTopPipe();
 
 #endif
