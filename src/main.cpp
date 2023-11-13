@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include <vector>
 
 const int screenWidth = 280;
 const int screenHeight = 500;
@@ -26,25 +27,26 @@ int main() {
     loadBackgroundImage();
     loadBaseImage();
 
-    const int pipeX = screenWidth + 30;
+    // =================================
+    //              PIPES
+    // =================================
+    sf::Clock clock;
+    float lastPipeGenerationTime = clock.getElapsedTime().asSeconds();
+    std::vector<sf::Sprite> pipes = {};
+
     sf::Texture pipeTexture;
     if (!pipeTexture.loadFromFile("assets/sprites/pipe-green.png")) {
         throw "CANNOT_LOAD_PIPE_SPRITES";
     }
-    sf::Sprite pipe1(pipeTexture);
-    sf::Sprite pipe2(pipeTexture);
+    sf::Sprite pipe(pipeTexture);
 
-    const sf::FloatRect pipeLocalBounds = pipe1.getLocalBounds();
-    pipe1.setOrigin(pipeLocalBounds.width / 2, pipeLocalBounds.height);
-    pipe2.setOrigin(pipeLocalBounds.width / 2, pipeLocalBounds.height);
-    pipe1.rotate(180);
+    // Get local bounds of pipe
+    sf::FloatRect localBounds = pipe.getLocalBounds();
+    pipe.setOrigin(localBounds.width / 2, localBounds.height);
 
-    std::vector<sf::Sprite> pipes = {};
-
-    const int pipePosCombinations[8][2] = {
-        {-50, 650},  {-100, 600}, {-150, 550}, {-200, 500},
-        {-100, 650}, {-150, 600}, {-150, 550}, {-200, 500},
-    };
+    pipe.setPosition(screenWidth + 30, 400);
+    // =================================
+    // =================================
 
     // Main loop
     while (window.isOpen()) {
@@ -56,23 +58,21 @@ int main() {
 
         continuousBaseMovement();
 
-        if (pipe1.getPosition().x + pipe1.getLocalBounds().width < 0) {
-            int randomNum = rand() % 7;
-            pipe1.setPosition(pipeX, pipePosCombinations[randomNum][0]);
-            pipe2.setPosition(pipeX, pipePosCombinations[randomNum][1]);
+        // Pipe generation after every 3 seconds
+        float currentTime = clock.getElapsedTime().asSeconds();
+        if (currentTime - lastPipeGenerationTime > 2) {
+            pipes.push_back(pipe);
+            lastPipeGenerationTime = currentTime;
         }
 
         window.clear();
         window.draw(background);
-        window.draw(pipe1);
-        window.draw(pipe2);
-
+        for (int i = 0; i < pipes.size(); i++) {
+            window.draw(pipes[i]);
+            pipes[i].move(-2, 0);
+        }
         window.draw(base);
-        base.move(-5, 0);
-
-        pipe1.move(-5, 0);
-        pipe2.move(-5, 0);
-
+        base.move(-2, 0);
         window.display();
     }
 }
