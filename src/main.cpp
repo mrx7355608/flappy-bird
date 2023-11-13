@@ -32,24 +32,8 @@ int main() {
     // =================================
     sf::Clock clock;
     float lastPipeGenerationTime = clock.getElapsedTime().asSeconds();
-    std::vector<sf::Sprite> bottomPipes = {};
-    std::vector<sf::Sprite> topPipes = {};
-
     loadBottomPipe();
     loadTopPipe();
-
-    // Get local bounds of pipe
-    sf::FloatRect localBounds = bottomPipe.getLocalBounds();
-    // Set origin for rotation and positions
-    int pipeXpos = screenWidth + 30;
-    bottomPipe.setOrigin(localBounds.width / 2, localBounds.height);
-    bottomPipe.setPosition(pipeXpos, 650);
-    topPipe.setOrigin(localBounds.width / 2, localBounds.height);
-    topPipe.setPosition(pipeXpos, -250);
-    topPipe.rotate(180);
-
-    // =================================
-    // =================================
 
     // Main loop
     while (window.isOpen()) {
@@ -61,11 +45,10 @@ int main() {
 
         continuousBaseMovement();
 
-        // Pipe generation after every 3 seconds
+        // Pipe generation after every 1.5 seconds
         float currentTime = clock.getElapsedTime().asSeconds();
         if (currentTime - lastPipeGenerationTime > 1.5) {
-            bottomPipes.push_back(bottomPipe);
-            topPipes.push_back(topPipe);
+            spawnPipes();
             lastPipeGenerationTime = currentTime;
         }
 

@@ -1,5 +1,6 @@
 #include "../include/Globals.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
 sf::Texture backgroundTexture;
 sf::Sprite background;
@@ -44,6 +45,8 @@ void loadBottomPipe() {
     }
     sf::Sprite bPipe(pipeTexture);
     bottomPipe = bPipe;
+    sf::FloatRect localBounds = bottomPipe.getLocalBounds();
+    bottomPipe.setOrigin(localBounds.width / 2, localBounds.height);
 }
 
 void loadTopPipe() {
@@ -52,4 +55,7 @@ void loadTopPipe() {
     }
     sf::Sprite tPipe(pipeTexture);
     topPipe = tPipe;
+    sf::FloatRect localBounds = topPipe.getLocalBounds();
+    topPipe.setOrigin(localBounds.width / 2, localBounds.height);
+    topPipe.rotate(180);
 }
