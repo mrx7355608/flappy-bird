@@ -21,9 +21,6 @@
 const int screenWidth = 280;
 const int screenHeight = 500;
 
-sf::Texture birdTexture;
-sf::Sprite bird;
-
 int main() {
     TextureLoader textureLoader;
     Movement movementManager;
@@ -42,24 +39,45 @@ int main() {
     // ========================
     //      Loading Images
     // ========================
+    // Backgrond image
     sf::Texture backgroundTexture = textureLoader.loadBackgroundTexture();
     sf::Sprite backgroundImage(backgroundTexture);
 
+    // Base image
     sf::Texture baseTexture = textureLoader.loadBaseTexture();
     sf::Sprite baseImage(baseTexture);
     baseImage.setPosition(0, 400);
+
+    // Bird images
+    sf::Texture upFlapTexture = textureLoader.loadBirdUpFlapTexture();
+    sf::Sprite upFlapBird(upFlapTexture);
+    upFlapBird.setPosition(100, 250);
+
+    sf::Texture midFlapTexture = textureLoader.loadBirdMidFlapTexture();
+    sf::Sprite midFlapBird(midFlapTexture);
+    midFlapBird.setPosition(100, 250);
+
+    sf::Texture downFlapTexture = textureLoader.loadBirdDownFlapTexture();
+    sf::Sprite downFlapBird(downFlapTexture);
+    downFlapBird.setPosition(100, 250);
+
+    std::string flap = "up";
+
+    float birdFlapTimer = clock.getElapsedTime().asMilliseconds();
+    sf::Sprite birdImageToRender = upFlapBird;
+
     // ############################
 
     // ========================
     //      Handling Pipes
     // ========================
     sf::Texture pipeTexture = textureLoader.loadPipeTexture();
+    float lastPipeGenerationTime = clock.getElapsedTime().asSeconds();
     Pipe pipesManager(pipeTexture);
     // Using arrays to store pipes so that multiple pipes can be
     // rendered using a for loop
     std::vector<sf::Sprite> bottomPipes = {};
     std::vector<sf::Sprite> topPipes = {};
-    float lastPipeGenerationTime = clock.getElapsedTime().asSeconds();
     // ############################
 
     // Pointers
@@ -88,6 +106,23 @@ int main() {
             lastPipeGenerationTime = currentTime;
         }
 
+        // After every 200 ms change the bird's current flap
+        // image to make a flying animation
+        float timeInMs = clock.getElapsedTime().asMilliseconds();
+        if (timeInMs - birdFlapTimer > 250) {
+            if (flap == "up") {
+                flap = "mid";
+                birdImageToRender = midFlapBird;
+            } else if (flap == "mid") {
+                flap = "down";
+                birdImageToRender = downFlapBird;
+            } else {
+                birdImageToRender = upFlapBird;
+                flap = "up";
+            }
+            birdFlapTimer = timeInMs;
+        }
+
         // TODO: add a condition that removes pipes from arrays
         // when they are no longer displayed on screen
 
@@ -103,6 +138,7 @@ int main() {
             topPipes[i].move(-2, 0);
         }
         window.draw(baseImage);
+        window.draw(birdImageToRender);
 
         // Move images on game window
         baseImage.move(-2, 0);
