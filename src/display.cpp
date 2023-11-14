@@ -42,7 +42,4 @@ void loadTopPipe() {
     }
     sf::Sprite tPipe(pipeTexture);
     topPipe = tPipe;
-    sf::FloatRect localBounds = topPipe.getLocalBounds();
-    topPipe.setOrigin(localBounds.width / 2, localBounds.height);
-    topPipe.rotate(180);
 }
