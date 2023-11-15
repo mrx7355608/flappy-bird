@@ -3,6 +3,7 @@
 #include "../include/Movement.h"
 #include "../include/Pipe.h"
 #include "../include/TextureLoader.h"
+#include "../include/Window.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -31,6 +32,9 @@ int main() {
     // ========================
     sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight),
                             "Flappy Bird");
+    sf::RenderWindow *win = &window;
+    Window windowManager(win);
+
     window.setFramerateLimit(60);
     sf::Image icon = textureLoader.loadGameIcon();
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -48,23 +52,20 @@ int main() {
     sf::Sprite baseImage(baseTexture);
     baseImage.setPosition(0, 400);
 
-    // Bird images
+    // ========================
+    //      Handling Bird
+    // ========================
+    std::string flap = "up";
+
     sf::Texture upFlapTexture = textureLoader.loadBirdUpFlapTexture();
     sf::Sprite upFlapBird(upFlapTexture);
-    upFlapBird.setPosition(100, 250);
+    upFlapBird.setScale(0.85, 0.85);
 
     sf::Texture midFlapTexture = textureLoader.loadBirdMidFlapTexture();
     sf::Sprite midFlapBird(midFlapTexture);
-    midFlapBird.setPosition(100, 250);
 
     sf::Texture downFlapTexture = textureLoader.loadBirdDownFlapTexture();
     sf::Sprite downFlapBird(downFlapTexture);
-    downFlapBird.setPosition(100, 250);
-
-    std::string flap = "up";
-
-    float birdFlapTimer = clock.getElapsedTime().asMilliseconds();
-    sf::Sprite birdImageToRender = upFlapBird;
 
     // ############################
 
@@ -82,8 +83,8 @@ int main() {
 
     // Pointers
     sf::Sprite *baseImagePtr = &baseImage;
-    std::vector<sf::Sprite> *topPipesPtr = &topPipes;
-    std::vector<sf::Sprite> *bottomPipesPtr = &bottomPipes;
+    std::vector<sf::Sprite> *topPipesArrayPtr = &topPipes;
+    std::vector<sf::Sprite> *bottomPipesArrayPtr = &bottomPipes;
 
     // Main loop
     while (window.isOpen()) {
@@ -98,54 +99,33 @@ int main() {
             }
         }
 
-        // if the right-side of base image is close to right-side of game window
-        // then it moves back the base image to its starting position and
-        // creates an infinite base movement animation
-        movementManager.continuousBaseMovement(baseImagePtr);
-
         // Spawn pipes after every 2 seconds
         float currentTime = clock.getElapsedTime().asSeconds();
         if (currentTime - lastPipeGenerationTime > 2) {
-            pipesManager.spawnPipes(bottomPipesPtr, topPipesPtr);
+            pipesManager.spawnPipes(bottomPipesArrayPtr, topPipesArrayPtr);
             lastPipeGenerationTime = currentTime;
-        }
-
-        // After every 200 ms change the bird's current flap
-        // image to make a flying animation
-        float timeInMs = clock.getElapsedTime().asMilliseconds();
-        if (timeInMs - birdFlapTimer > 250) {
-            if (flap == "up") {
-                flap = "mid";
-                birdImageToRender = midFlapBird;
-            } else if (flap == "mid") {
-                flap = "down";
-                birdImageToRender = downFlapBird;
-            } else {
-                birdImageToRender = upFlapBird;
-                flap = "up";
-            }
-            birdFlapTimer = timeInMs;
         }
 
         // TODO: add a condition that removes pipes from arrays
         // when they are no longer displayed on screen
 
         window.clear();
+
         // Draw images on game window
-        window.draw(backgroundImage);
-        for (int i = 0; i < bottomPipes.size(); i++) {
-            window.draw(bottomPipes[i]);
-            bottomPipes[i].move(-2, 0);
-        }
-        for (int i = 0; i < topPipes.size(); i++) {
-            window.draw(topPipes[i]);
-            topPipes[i].move(-2, 0);
-        }
-        window.draw(baseImage);
-        window.draw(birdImageToRender);
+        windowManager.drawBackgroundImage(backgroundImage);
+        windowManager.drawBottomPipes(bottomPipesArrayPtr);
+        windowManager.drawTopPipes(topPipesArrayPtr);
+        windowManager.drawBaseImage(baseImage);
+        window.draw(upFlapBird);
 
         // Move images on game window
-        baseImage.move(-2, 0);
+        movementManager.moveTopPipes(topPipesArrayPtr);
+        movementManager.moveBottomPipes(bottomPipesArrayPtr);
+        // Repositions thee base image when it is about
+        // to leave the right-side of the main game window
+        movementManager.continuousBaseMovement(baseImagePtr);
+        // just moves the base with the speed of 2
+        movementManager.moveBase(baseImagePtr);
 
         // Update display
         window.display();

@@ -17,7 +17,10 @@ void spawnPipes();
 
 class Movement {
   public:
+    void moveBase(sf::Sprite *);
     void continuousBaseMovement(sf::Sprite *);
+    void moveTopPipes(std::vector<sf::Sprite> *);
+    void moveBottomPipes(std::vector<sf::Sprite> *);
 };
 
 #endif

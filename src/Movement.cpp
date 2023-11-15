@@ -4,32 +4,28 @@
 #include <iostream>
 #include <vector>
 
-std::vector<sf::Sprite> bottomPipes = {};
-std::vector<sf::Sprite> topPipes = {};
-
-int pipeXpos = screenWidth + 30;
-const int pipePosCombos[6][2] = {{-50, 650},  {-100, 600}, {-150, 550},
-                                 {-200, 500}, {-250, 450}, {-150, 400}};
-
-int generateRandomNumber() {
-    srand(time(NULL));
-    int randomNumber = rand() % 5;
-    return randomNumber;
-}
-
-void spawnPipes() {
-    int randomNumber = generateRandomNumber();
-    bottomPipe.setPosition(pipeXpos, pipePosCombos[randomNumber][1]);
-    topPipe.setPosition(pipeXpos, pipePosCombos[randomNumber][0]);
-    bottomPipes.push_back(bottomPipe);
-    topPipes.push_back(topPipe);
-}
-
+// if the right-side of base image is close to right-side of game window
+// then it moves back the base image to its starting position and
+// creates an infinite base movement animation
 void Movement::continuousBaseMovement(sf::Sprite *base) {
     const float basePosX = base->getPosition().x;
     const int rightSideOfBase = base->getLocalBounds().width + basePosX;
 
     if (rightSideOfBase < screenWidth + 10) {
         base->setPosition(0, 400);
+    }
+}
+
+void Movement::moveBase(sf::Sprite *base) { base->move(-2, 0); }
+
+void Movement::moveTopPipes(std::vector<sf::Sprite> *topPipesArray) {
+    for (int i = 0; i < topPipesArray->size(); i++) {
+        topPipesArray->at(i).move(-2, 0);
+    }
+}
+
+void Movement::moveBottomPipes(std::vector<sf::Sprite> *bottomPipesArray) {
+    for (int i = 0; i < bottomPipesArray->size(); i++) {
+        bottomPipesArray->at(i).move(-2, 0);
     }
 }
