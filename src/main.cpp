@@ -1,4 +1,3 @@
-#include "../include/Display.h"
 #include "../include/Globals.h"
 #include "../include/Movement.h"
 #include "../include/Pipe.h"
@@ -30,8 +29,8 @@ int main() {
     // ========================
     //    Game window setup
     // ========================
-    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight),
-                            "Flappy Bird");
+    sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Game");
+    window.setVerticalSyncEnabled(true);
     sf::RenderWindow *win = &window;
     Window windowManager(win);
 
@@ -55,11 +54,12 @@ int main() {
     // ========================
     //      Handling Bird
     // ========================
-    std::string flap = "up";
-
+    double birdVelocity = 1.0;
+    float lastTime = clock.getElapsedTime().asMilliseconds();
     sf::Texture upFlapTexture = textureLoader.loadBirdUpFlapTexture();
     sf::Sprite upFlapBird(upFlapTexture);
-    upFlapBird.setScale(0.85, 0.85);
+    upFlapBird.setScale(0.9, 0.9);
+    upFlapBird.setPosition(50.0f, 200.0f);
 
     sf::Texture midFlapTexture = textureLoader.loadBirdMidFlapTexture();
     sf::Sprite midFlapBird(midFlapTexture);
@@ -106,6 +106,11 @@ int main() {
             lastPipeGenerationTime = currentTime;
         }
 
+        float currentTimeInMs = clock.getElapsedTime().asMilliseconds();
+        if (currentTimeInMs - lastTime > 100) {
+            birdVelocity += 2.5;
+            lastTime = currentTimeInMs;
+        }
         // TODO: add a condition that removes pipes from arrays
         // when they are no longer displayed on screen
 
@@ -121,11 +126,13 @@ int main() {
         // Move images on game window
         movementManager.moveTopPipes(topPipesArrayPtr);
         movementManager.moveBottomPipes(bottomPipesArrayPtr);
-        // Repositions thee base image when it is about
+
+        // Repositions the base image when it is about
         // to leave the right-side of the main game window
         movementManager.continuousBaseMovement(baseImagePtr);
         // just moves the base with the speed of 2
         movementManager.moveBase(baseImagePtr);
+        upFlapBird.move(0, birdVelocity);
 
         // Update display
         window.display();
