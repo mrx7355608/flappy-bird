@@ -8,10 +8,17 @@ If you downloaded sfml from their website, make sure to update the SFML lib & in
 
 ### Linux
 ```
-sudo apt install libsfml-dev # install sfml
-git clone https://github.com/mrx7355608/flappy-bird.git # clone repo
-cd flappy-bird # cd into dir
-make # make and run!
+# install sfml
+sudo apt install libsfml-dev 
+
+# clone repo
+git clone https://github.com/mrx7355608/flappy-bird.git 
+
+# cd into dir
+cd flappy-bird 
+
+# make and run!
+make 
 ```
 
 ### Windows
