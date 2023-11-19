@@ -97,6 +97,10 @@ int main() {
                 event.key.code == sf::Keyboard::Escape) {
                 window.close();
             }
+            if (event.type == sf::Event::KeyPressed &&
+                event.key.code == sf::Keyboard::Space) {
+                birdVelocity *= -1.5;
+            }
         }
 
         // Spawn pipes after every 2 seconds
@@ -108,7 +112,7 @@ int main() {
 
         float currentTimeInMs = clock.getElapsedTime().asMilliseconds();
         if (currentTimeInMs - lastTime > 100) {
-            birdVelocity += 2.5;
+            birdVelocity += 2.3;
             lastTime = currentTimeInMs;
         }
         // TODO: add a condition that removes pipes from arrays
