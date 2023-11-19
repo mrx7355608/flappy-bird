@@ -7,12 +7,12 @@ Made With: **C++** & **SFML**
 If you downloaded sfml from their website, make sure to update the SFML lib & include directories in Makefile, otherwise program won't compile
 
 ### Linux
-"""
+```
 sudo apt install libsfml-dev # install sfml
 git clone https://github.com/mrx7355608/flappy-bird.git # clone repo
 cd flappy-bird # cd into dir
 make # make and run!
-"""
+```
 
 ### Windows
 Will update soon!
