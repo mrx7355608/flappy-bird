@@ -55,6 +55,7 @@ int main() {
     //      Handling Bird
     // ========================
     double birdVelocity = 1.0;
+    float gravity = 1.8;
     float lastTime = clock.getElapsedTime().asMilliseconds();
     sf::Texture upFlapTexture = textureLoader.loadBirdUpFlapTexture();
     sf::Sprite upFlapBird(upFlapTexture);
@@ -99,9 +100,11 @@ int main() {
             }
             if (event.type == sf::Event::KeyPressed &&
                 event.key.code == sf::Keyboard::Space) {
-                birdVelocity *= -1.5;
+                birdVelocity = 4 * -(gravity);
             }
         }
+
+        std::cout << birdVelocity << std::endl;
 
         // Spawn pipes after every 2 seconds
         float currentTime = clock.getElapsedTime().asSeconds();
@@ -112,7 +115,7 @@ int main() {
 
         float currentTimeInMs = clock.getElapsedTime().asMilliseconds();
         if (currentTimeInMs - lastTime > 100) {
-            birdVelocity += 2.3;
+            birdVelocity += gravity;
             lastTime = currentTimeInMs;
         }
         // TODO: add a condition that removes pipes from arrays
