@@ -1,0 +1,43 @@
+# Project: Project1
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = src/display.o src/main.o src/Movement.o src/Pipe.o src/TextureLoader.o src/Window.o
+LINKOBJ  = src/display.o src/main.o src/Movement.o src/Pipe.o src/TextureLoader.o src/Window.o
+LIBS     = -L"I:/Dev-Cpp/MinGW64/lib" -L"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -L"I:/Projects/C++/FlappyBird/sfml/SFML-2.4.2/lib" -lsfml-window -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-system
+INCS     = -I"I:/Dev-Cpp/MinGW64/include" -I"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"I:/Projects/C++/FlappyBird/sfml/SFML-2.4.2/include"
+CXXINCS  = -I"I:/Dev-Cpp/MinGW64/include" -I"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"I:/Projects/C++/FlappyBird/sfml/SFML-2.4.2/include"
+BIN      = flappybird.exe
+CXXFLAGS = $(CXXINCS) -std=c++11 -w -Wall -Wextra -pedantic -Werror -Wfatal-errors
+CFLAGS   = $(INCS) -std=c++11 -w -Wall -Wextra -pedantic -Werror -Wfatal-errors
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+src/display.o: src/display.cpp
+	$(CPP) -c src/display.cpp -o src/display.o $(CXXFLAGS)
+
+src/main.o: src/main.cpp
+	$(CPP) -c src/main.cpp -o src/main.o $(CXXFLAGS)
+
+src/Movement.o: src/Movement.cpp
+	$(CPP) -c src/Movement.cpp -o src/Movement.o $(CXXFLAGS)
+
+src/Pipe.o: src/Pipe.cpp
+	$(CPP) -c src/Pipe.cpp -o src/Pipe.o $(CXXFLAGS)
+
+src/TextureLoader.o: src/TextureLoader.cpp
+	$(CPP) -c src/TextureLoader.cpp -o src/TextureLoader.o $(CXXFLAGS)
+
+src/Window.o: src/Window.cpp
+	$(CPP) -c src/Window.cpp -o src/Window.o $(CXXFLAGS)

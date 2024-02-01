@@ -1,0 +1,8 @@
+sfml/
+bin/
+
+*.dll
+*.exe
+*.dev
+*.layout
+*.o
