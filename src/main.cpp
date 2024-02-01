@@ -17,10 +17,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-<<<<<<< HEAD
-#include <stdexcept>
-=======
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
 
 const int screenWidth = 280;
 const int screenHeight = 500;
@@ -63,11 +59,7 @@ int main() {
     float lastTime = clock.getElapsedTime().asMilliseconds();
     sf::Texture upFlapTexture = textureLoader.loadBirdUpFlapTexture();
     sf::Sprite upFlapBird(upFlapTexture);
-<<<<<<< HEAD
     upFlapBird.setScale(0.8, 0.8);
-=======
-    upFlapBird.setScale(0.9, 0.9);
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
     upFlapBird.setPosition(50.0f, 200.0f);
 
     sf::Texture midFlapTexture = textureLoader.loadBirdMidFlapTexture();
@@ -84,12 +76,7 @@ int main() {
     sf::Texture pipeTexture = textureLoader.loadPipeTexture();
     float lastPipeGenerationTime = clock.getElapsedTime().asSeconds();
     Pipe pipesManager(pipeTexture);
-<<<<<<< HEAD
 
-=======
-    // Using arrays to store pipes so that multiple pipes can be
-    // rendered using a for loop
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
     std::vector<sf::Sprite> bottomPipes = {};
     std::vector<sf::Sprite> topPipes = {};
     // ############################
@@ -99,12 +86,9 @@ int main() {
     std::vector<sf::Sprite> *topPipesArrayPtr = &topPipes;
     std::vector<sf::Sprite> *bottomPipesArrayPtr = &bottomPipes;
 
-<<<<<<< HEAD
 	// tracking pipes count for collisions
 	int currentPipeIndex = 0;
-	
-=======
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
+
     // Main loop
     while (window.isOpen()) {
         sf::Event event;
@@ -118,36 +102,23 @@ int main() {
             }
             if (event.type == sf::Event::KeyPressed &&
                 event.key.code == sf::Keyboard::Space) {
-<<<<<<< HEAD
                 birdVelocity = 3 * -(gravity);
             }
         }
 
-=======
-                birdVelocity = 4 * -(gravity);
-            }
-        }
-
-        std::cout << birdVelocity << std::endl;
-
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
         // Spawn pipes after every 2 seconds
         float currentTime = clock.getElapsedTime().asSeconds();
         if (currentTime - lastPipeGenerationTime > 2) {
             pipesManager.spawnPipes(bottomPipesArrayPtr, topPipesArrayPtr);
             lastPipeGenerationTime = currentTime;
         }
-
-<<<<<<< HEAD
+        
 		// Makes the bird fall under gravity
-=======
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
         float currentTimeInMs = clock.getElapsedTime().asMilliseconds();
         if (currentTimeInMs - lastTime > 100) {
             birdVelocity += gravity;
             lastTime = currentTimeInMs;
         }
-<<<<<<< HEAD
         
         // Check if bird collides with base
         if (upFlapBird.getPosition().y >= 400) {
@@ -176,8 +147,6 @@ int main() {
 			}
 		}
 
-=======
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
         // TODO: add a condition that removes pipes from arrays
         // when they are no longer displayed on screen
 
@@ -193,15 +162,7 @@ int main() {
         // Move images on game window
         movementManager.moveTopPipes(topPipesArrayPtr);
         movementManager.moveBottomPipes(bottomPipesArrayPtr);
-<<<<<<< HEAD
         movementManager.continuousBaseMovement(baseImagePtr);
-=======
-
-        // Repositions the base image when it is about
-        // to leave the right-side of the main game window
-        movementManager.continuousBaseMovement(baseImagePtr);
-        // just moves the base with the speed of 2
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
         movementManager.moveBase(baseImagePtr);
         upFlapBird.move(0, birdVelocity);
 

@@ -6,9 +6,9 @@ CC       = gcc.exe
 WINDRES  = windres.exe
 OBJ      = src/display.o src/main.o src/Movement.o src/Pipe.o src/TextureLoader.o src/Window.o
 LINKOBJ  = src/display.o src/main.o src/Movement.o src/Pipe.o src/TextureLoader.o src/Window.o
-LIBS     = -L"I:/Dev-Cpp/MinGW64/lib" -L"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -L"I:/Projects/C++/FlappyBird/sfml/SFML-2.4.2/lib" -lsfml-window -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-system
-INCS     = -I"I:/Dev-Cpp/MinGW64/include" -I"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"I:/Projects/C++/FlappyBird/sfml/SFML-2.4.2/include"
-CXXINCS  = -I"I:/Dev-Cpp/MinGW64/include" -I"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"I:/Projects/C++/FlappyBird/sfml/SFML-2.4.2/include"
+LIBS     = -L"I:/Dev-Cpp/MinGW64/lib" -L"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -L"I:/Projects/C++/flappy/sfml/SFML-2.4.2/lib" -lsfml-window -lsfml-audio -lsfml-graphics -lsfml-network -lsfml-system
+INCS     = -I"I:/Dev-Cpp/MinGW64/include" -I"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"I:/Projects/C++/flappy/sfml/SFML-2.4.2/include"
+CXXINCS  = -I"I:/Dev-Cpp/MinGW64/include" -I"I:/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"I:/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"I:/Projects/C++/flappy/sfml/SFML-2.4.2/include"
 BIN      = flappybird.exe
 CXXFLAGS = $(CXXINCS) -std=c++11 -w -Wall -Wextra -pedantic -Werror -Wfatal-errors
 CFLAGS   = $(INCS) -std=c++11 -w -Wall -Wextra -pedantic -Werror -Wfatal-errors

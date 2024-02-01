@@ -15,17 +15,12 @@ Pipe::Pipe(sf::Texture pipeTxtre) { this->pipeTexture = pipeTxtre; }
 
 sf::Sprite Pipe::createBottomPipe(int pipeX, int pipeY) {
     sf::Sprite bottomPipe(this->pipeTexture);
-<<<<<<< HEAD
     // Get local bounds of a pipe
     sf::FloatRect pipeBounds = bottomPipe.getLocalBounds();
     // Set pipe origin
     bottomPipe.setOrigin(pipeBounds.width / 2, pipeBounds.height);
     // Set pipe position
-=======
-    // Set origin and position
-    sf::FloatRect pipeBounds = bottomPipe.getLocalBounds();
     bottomPipe.setOrigin(pipeBounds.width / 2, pipeBounds.height);
->>>>>>> c4a60de58c7809cd080ba174aa64ae0ede96b65a
     bottomPipe.setPosition(pipeX, pipeY);
     return bottomPipe;
 }
